@@ -1,0 +1,6 @@
+"0","phenotypeFile<-""data/example_phenotype_download.csv"""
+"0","metadataFile<-""data/example_metadata_download.csv"""
+"0",""
+"0","dbdata<-readDBdata(phenotypeFile,metadataFile)"
+"2","Joining, by = c(""studyYear"", ""programDbId"", ""programName"", ""programDescription"", ""studyDbId"", ""studyName"", ""studyDescription"", ""studyDesign"", ""plotWidth"", ""plotLength"", ""fieldSize"", ""fieldTrialIsPlannedToBeGenotyped"", ""fieldTrialIsPlannedToCross"", ""plantingDate"", ""harvestDate"", ""locationDbId"", ""locationName"")
+"

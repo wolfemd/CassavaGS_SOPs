@@ -1,0 +1,105 @@
+# Curate by trial {#curateTrials}
+
+**Purpose:**
+
+* Detection of statistical outliers
+* Analyze each trial to determine the "best" model for the data
+* Also check for genetic vs. non-genetic variability (H2)
+
+**Input:**
+
+* "Cleaned" field trial data
+
+**Expected outputs:** 
+
+* "Curated" field trial data (e.g. trials w/o variability removed) **_or_**
+* BLUPs and weights for each trial to be used in downstream multi-trial analysis.
+      - More similar to how SolGS operatures. Three steps:  
+            1. Analyze by trial and get BLUPs (or BLUEs)
+            2. Combine BLUPs/BLUEs from each trial in a single multi-trial analysis and get overall BLUPs for genomic prediction. 
+            3. Genomic prediction.
+
+## Worked example
+
+### Format input data
+
+Start with the cleaned data from the [previous step](#prepTP).
+```{r}
+library(tidyverse); library(magrittr);
+dbdata<-readRDS(here::here("data","example_data_cleaned.rds"))
+```
+
+```{r}
+dbdata<-dbdata %>% 
+      # create explicitly nested experimental design variables 
+      # intended for use in downstream analyses
+      mutate(yearInLoc=paste0(programName,"_",locationName,"_",studyYear),
+             trialInLocYr=paste0(yearInLoc,"_",studyName),
+             repInTrial=paste0(trialInLocYr,"_",replicate),
+             blockInRep=paste0(repInTrial,"_",blockNumber)) %>% 
+      # Transform the dataset to a longer form
+      # traits stacked
+      pivot_longer(cols = c(DM,PLTHT,BRNHT1,RTNO,TCHART,logFYLD,logTOPYLD,MCMDS),
+                   names_to = "Trait",
+                   values_to = "Value") %>% 
+      # tidy the data by grouping by trait-trial combination
+      nest(TrialData = -c(studyYear,programName,locationName,studyName,studyDesign,TrialType,Trait))
+```
+
+```{r cols.print=10}
+dbdata %>% rmarkdown::paged_table()
+```
+We now have 1 row for each Trait-studyName combination. The column **TrialData** is a list-type, with elements containing independent data chunks to analyze.
+
+```{r}
+dbdata$TrialData[[1]] %>% str
+```
+
+## UNDER CONSTRUCTION
+
+### Function to analyze trials
+How to standardize this function? 
+
+* Should user supply a **lmer**-style formula?  
+* Should we assume a design based on an input variable e.g. if `studyDesign=="Augmented"` fit a particular model?  
+* Or should we attempt an adaptive function that figures out the right design for itself? That's possible, but harder to code and will break more easily...  
+
+```{r, eval=F}
+indata<-dbdata$TrialData[[2]]
+dbdata$studyDesign[[2]]
+trait<-dbdata$Trait[[2]]
+
+gid<-"GID"
+lmerFormulas<-c("Value ~ (1|GID) + (1|repInTrial) + (1|blockInRep)",
+                "Value ~ (1|GID) + (1|repInTrial)",
+                "Value ~ (1|GID) + (1|blockInRep)")
+
+bestModel<-tibble(lmerFormula=lmerFormulas) %>%
+      mutate(modelFit=map(lmerFormula,~lmer(as.formula(.),data=indata)),
+             AIC=map_dbl(modelFit,AIC),
+             VarComps=) %>% 
+      arrange(AIC) %>% 
+      slice(1)
+
+
+
+```
+
+
+
+```{r}
+dbdata %>% filter(studyDesign=="Alpha") %>% slice(80) %>% unnest(TrialData) %>% count(replicate,blockNumber)
+dbdata %>% filter(studyDesign=="Alpha") %>% slice(1) %>% unnest(TrialData) %>% count(GID) %$% median(n)
+dbdata %>% filter(studyDesign=="RCBD") %>% 
+      mutate(NperClone=map_dbl(TrialData,~median(table(.$GID))))
+
+```
+
+```{r}
+dbdata %>% filter(studyDesign=="Augmented") %>% slice(1) %>% unnest(TrialData) %>% count(replicate,blockNumber,rowNumber,colNumber)
+```
+
+```{r}
+dbdata %>% filter(studyDesign=="RCBD") %>% slice(1) %>% unnest(TrialData) %>% count(replicate,blockNumber,rowNumber,colNumber)
+dbdata %>% filter(studyDesign=="RCBD")
+```

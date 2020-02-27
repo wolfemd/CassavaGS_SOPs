@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 Prepare training data | Cassava GS SOPs</title>
+  <meta name="description" content="Documentation for genomic selection-related standard operating procedures used for NextGen Cassava Breeding." />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 Prepare training data | Cassava GS SOPs" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Documentation for genomic selection-related standard operating procedures used for NextGen Cassava Breeding." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 Prepare training data | Cassava GS SOPs" />
+  
+  <meta name="twitter:description" content="Documentation for genomic selection-related standard operating procedures used for NextGen Cassava Breeding." />
+  
+
+<meta name="author" content="Marnin Wolfe" />
+
+
+<meta name="date" content="2020-02-22" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="curateTrials.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Cassava GS SOPs</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#workflows-use-cases"><i class="fa fa-check"></i><b>0.1</b> Workflows / Use Cases</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#example_data"><i class="fa fa-check"></i><b>0.2</b> Example data</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#appendices"><i class="fa fa-check"></i><b>0.3</b> Appendices</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="prepTP.html"><a href="prepTP.html"><i class="fa fa-check"></i><b>1</b> Prepare training data</a><ul>
+<li class="chapter" data-level="1.1" data-path="prepTP.html"><a href="prepTP.html#cassavabase-download"><i class="fa fa-check"></i><b>1.1</b> Cassavabase download</a></li>
+<li class="chapter" data-level="1.2" data-path="prepTP.html"><a href="prepTP.html#formatting-and-initial-qc"><i class="fa fa-check"></i><b>1.2</b> Formatting and initial QC</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="prepTP.html"><a href="prepTP.html#checklist"><i class="fa fa-check"></i><b>1.2.1</b> Checklist</a></li>
+<li class="chapter" data-level="1.2.2" data-path="prepTP.html"><a href="prepTP.html#specifications-for-output"><i class="fa fa-check"></i><b>1.2.2</b> Specifications for Output</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="prepTP.html"><a href="prepTP.html#worked-example"><i class="fa fa-check"></i><b>1.3</b> Worked example</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="prepTP.html"><a href="prepTP.html#read-in-data"><i class="fa fa-check"></i><b>1.3.1</b> Read-in data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="prepTP.html"><a href="prepTP.html#traits-and-traitabbreviations"><i class="fa fa-check"></i><b>1.3.2</b> Traits and TraitAbbreviations</a></li>
+<li class="chapter" data-level="1.3.3" data-path="prepTP.html"><a href="prepTP.html#qc-trait-values"><i class="fa fa-check"></i><b>1.3.3</b> QC Trait values</a></li>
+<li class="chapter" data-level="1.3.4" data-path="prepTP.html"><a href="prepTP.html#harvest-index"><i class="fa fa-check"></i><b>1.3.4</b> Harvest Index</a></li>
+<li class="chapter" data-level="1.3.5" data-path="prepTP.html"><a href="prepTP.html#unit-area-traits"><i class="fa fa-check"></i><b>1.3.5</b> Unit area traits</a></li>
+<li class="chapter" data-level="1.3.6" data-path="prepTP.html"><a href="prepTP.html#season-wide-mean-cmds"><i class="fa fa-check"></i><b>1.3.6</b> Season-wide mean CMDS</a></li>
+<li class="chapter" data-level="1.3.7" data-path="prepTP.html"><a href="prepTP.html#assign-genos-to-phenos"><i class="fa fa-check"></i><b>1.3.7</b> Assign genos to phenos</a></li>
+<li class="chapter" data-level="1.3.8" data-path="prepTP.html"><a href="prepTP.html#write-cleaned-dataset"><i class="fa fa-check"></i><b>1.3.8</b> Write cleaned dataset</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="curateTrials.html"><a href="curateTrials.html"><i class="fa fa-check"></i><b>2</b> Curate by trial</a><ul>
+<li class="chapter" data-level="2.1" data-path="curateTrials.html"><a href="curateTrials.html#format-input-data"><i class="fa fa-check"></i><b>2.1</b> Format input data</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Cassava GS SOPs</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="prepTP" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Prepare training data</h1>
+<p>The current GS pipeline starts with download of field (phenotype) data from <a href="http://www.cassavabase.org">CassavaBase</a>.</p>
+<div id="cassavabase-download" class="section level2">
+<h2><span class="header-section-number">1.1</span> Cassavabase download</h2>
+<ol style="list-style-type: decimal">
+<li>Use the <a href="https://www.cassavabase.org/breeders/search">Cassavabase search wizard</a></li>
+<li>Select the trials of interest.</li>
+<li>Downloaded the meta-data (CSV format).</li>
+<li>Downloaded the phenotype data (PLOT-basis only).</li>
+</ol>
+<p>There are many points for initial user curation, much can be handled with curation of data on the database, else it needs to be cleaned up after download.</p>
+</div>
+<div id="formatting-and-initial-qc" class="section level2">
+<h2><span class="header-section-number">1.2</span> Formatting and initial QC</h2>
+<p>For the sake of <em>standard</em> code, users need to formate and QC their data either as it is represented on the DB (i.e. in the metadata) and/or in processing post-data-download.</p>
+<div id="checklist" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> Checklist</h3>
+<ol style="list-style-type: decimal">
+<li>Recommend to rename trait columns (with the code CO_334) with an abbreviation.</li>
+<li>Recommend to remove unwanted traits. Saves RAM, etc.</li>
+<li>Experimental design variables</li>
+</ol>
+<ul>
+<li><strong>replicate:</strong> Represents COMPLETE blocks only. I have found sometimes, blockNumber was used.</li>
+<li><strong>blockNumber:</strong> INCOMPLETE blocks only.</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>QC Trait values</li>
+</ol>
+<ul>
+<li>Much of this may be already done before upload to DB, or by DB prior to download.</li>
+<li>Set missing Disease Severity values &lt;1 or &gt;5</li>
+<li>Set missing disease incidence &lt;0 or &gt;1</li>
+<li>Dry Matter Content (DM)
+<ul>
+<li>Set missing DM==0</li>
+<li>Set missing DM &gt;65 and/or &lt;4 (alternative)</li>
+<li>Check which methods were used to measure this. For plots with multiple methods used, decide on a way to choose between them or average them. Create a consensus column for “DM”, which should have a minimum of missing values. Remove all other DM traits.</li>
+<li>If both “oven dry” and “specific gravity” applied, choose “oven dry” data. If only one or the other, take what you can get!</li>
+</ul></li>
+<li>Yield traits (RTWT, RTNO, SHTWT, FYLD, TOPYLD)
+<ul>
+<li>Set missing when: Value==0 | NOHAV==0 | is.na(NOHAV)</li>
+</ul></li>
+<li>Remove non-integer values of RTNO</li>
+<li>Harvest Index (HI)
+<ul>
+<li>Compute harvest index <em>after</em> QC of RTWT and SHTWT above.</li>
+</ul></li>
+</ul>
+<ol start="5" style="list-style-type: decimal">
+<li>PerArea Calculations (FYLD and TOPYLD)</li>
+</ol>
+<ul>
+<li>Compute <em>after</em> QC of RTWT and SHTWT above.</li>
+<li><strong>netplot_area:</strong> unclear which meta variable on DB should represent this
+<ul>
+<li><strong>netplot_count:</strong> Expected number of plant stands harvested or ExpectedNOHAV. I’ve been using MaxNOHAV as a proxy.</li>
+<li><strong>m2_PerPlant:</strong> aka <strong>PlotSpacing</strong></li>
+<li><strong>netplot_area = netplot_count x m2_PerPlant</strong></li>
+</ul></li>
+<li>FYLD = 10*(RTWT/netplot_area)</li>
+</ul>
+<ol start="6" style="list-style-type: decimal">
+<li>Composite traits, e.g. season-wide mean disease severity or AUDPC, etc.</li>
+<li>Assign genos to phenos</li>
+</ol>
+<ul>
+<li>The <strong>germplasmName</strong> variable is the critical variable indicating genotype (clone) identities and should be used for any downstream analysis. However, imputed SNP dosage data or kinship matrices that are needed for downstream genomic prediction may have different names. Cassavabase will soon supply those and will hopefully provide an easy solution. For now, I rely on flat files, which I created over the years. Downstream code will require a genotype ID column to be specified which matches between phenos/plots and genos/kinshipMatrices.</li>
+<li>Select one DNA sample per “germplasmName”
+<ul>
+<li>Often there are more than one.</li>
+<li>It may actually be ok for one DNA sample to point to multiple germplasmName (not all clone names are successfully merged / synonymized)</li>
+<li>But ideally we don’t want many DNA pointing to same data point, for downstream mixed modeling.</li>
+</ul></li>
+</ul>
+</div>
+<div id="specifications-for-output" class="section level3">
+<h3><span class="header-section-number">1.2.2</span> Specifications for Output</h3>
+<p><strong>OUTPUT:</strong> a “cleaned”, dataset with all traits, experimental design and other co-variables necessary for downstream analysis defined.</p>
+</div>
+</div>
+<div id="worked-example" class="section level2">
+<h2><span class="header-section-number">1.3</span> Worked example</h2>
+<div id="read-in-data" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> Read-in data</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="prepTP.html#cb1-1"></a><span class="kw">library</span>(tidyverse); <span class="kw">library</span>(magrittr)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.2.1     ✓ purrr   0.3.3
+## ✓ tibble  2.1.3     ✓ dplyr   0.8.4
+## ✓ tidyr   1.0.2     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.4.0</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre><code>## 
+## Attaching package: &#39;magrittr&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     set_names</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     extract</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="prepTP.html#cb8-1"></a>readDBdata&lt;-<span class="cf">function</span>(phenotypeFile,metadataFile){</span>
+<span id="cb8-2"><a href="prepTP.html#cb8-2"></a>      pheno&lt;-<span class="kw">read.csv</span>(phenotypeFile,</span>
+<span id="cb8-3"><a href="prepTP.html#cb8-3"></a>                      <span class="dt">na.strings =</span> <span class="kw">c</span>(<span class="st">&quot;#VALUE!&quot;</span>,<span class="ot">NA</span>,<span class="st">&quot;.&quot;</span>,<span class="st">&quot;&quot;</span>,<span class="st">&quot; &quot;</span>,<span class="st">&quot;-&quot;</span>,<span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span>),</span>
+<span id="cb8-4"><a href="prepTP.html#cb8-4"></a>                      <span class="dt">stringsAsFactors =</span> F)</span>
+<span id="cb8-5"><a href="prepTP.html#cb8-5"></a>      meta&lt;-<span class="kw">read.csv</span>(metadataFile,</span>
+<span id="cb8-6"><a href="prepTP.html#cb8-6"></a>                     <span class="dt">na.strings =</span> <span class="kw">c</span>(<span class="st">&quot;#VALUE!&quot;</span>,<span class="ot">NA</span>,<span class="st">&quot;.&quot;</span>,<span class="st">&quot;&quot;</span>,<span class="st">&quot; &quot;</span>,<span class="st">&quot;-&quot;</span>,<span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span>),</span>
+<span id="cb8-7"><a href="prepTP.html#cb8-7"></a>                     <span class="dt">stringsAsFactors =</span> F) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb8-8"><a href="prepTP.html#cb8-8"></a><span class="st">            </span><span class="kw">rename</span>(<span class="dt">programName=</span>breedingProgramName,</span>
+<span id="cb8-9"><a href="prepTP.html#cb8-9"></a>                   <span class="dt">programDescription=</span>breedingProgramDescription,</span>
+<span id="cb8-10"><a href="prepTP.html#cb8-10"></a>                   <span class="dt">programDbId=</span>breedingProgramDbId)</span>
+<span id="cb8-11"><a href="prepTP.html#cb8-11"></a>      indata&lt;-<span class="kw">left_join</span>(pheno,meta) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb8-12"><a href="prepTP.html#cb8-12"></a><span class="st">            </span><span class="kw">filter</span>(observationLevel<span class="op">==</span><span class="st">&quot;plot&quot;</span>)</span>
+<span id="cb8-13"><a href="prepTP.html#cb8-13"></a>      <span class="kw">return</span>(indata) }    </span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="prepTP.html#cb9-1"></a>phenotypeFile&lt;-<span class="st">&quot;data/example_phenotype_download.csv&quot;</span></span>
+<span id="cb9-2"><a href="prepTP.html#cb9-2"></a>metadataFile&lt;-<span class="st">&quot;data/example_metadata_download.csv&quot;</span></span>
+<span id="cb9-3"><a href="prepTP.html#cb9-3"></a></span>
+<span id="cb9-4"><a href="prepTP.html#cb9-4"></a>dbdata&lt;-<span class="kw">readDBdata</span>(phenotypeFile,metadataFile)</span></code></pre></div>
+<pre><code>## Joining, by = c(&quot;studyYear&quot;, &quot;programDbId&quot;, &quot;programName&quot;, &quot;programDescription&quot;, &quot;studyDbId&quot;, &quot;studyName&quot;, &quot;studyDescription&quot;, &quot;studyDesign&quot;, &quot;plotWidth&quot;, &quot;plotLength&quot;, &quot;fieldSize&quot;, &quot;fieldTrialIsPlannedToBeGenotyped&quot;, &quot;fieldTrialIsPlannedToCross&quot;, &quot;plantingDate&quot;, &quot;harvestDate&quot;, &quot;locationDbId&quot;, &quot;locationName&quot;)</code></pre>
+<p>TrialType Variable</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="prepTP.html#cb11-1"></a>makeTrialTypeVar&lt;-<span class="cf">function</span>(indata){</span>
+<span id="cb11-2"><a href="prepTP.html#cb11-2"></a>  <span class="co"># This is peculiar to what works (for me) for IITA</span></span>
+<span id="cb11-3"><a href="prepTP.html#cb11-3"></a>  <span class="co"># Can customize this or add lines to grab TrialTypes for each breeding program</span></span>
+<span id="cb11-4"><a href="prepTP.html#cb11-4"></a>  outdata&lt;-indata <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb11-5"><a href="prepTP.html#cb11-5"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">TrialType=</span><span class="kw">ifelse</span>(<span class="kw">grepl</span>(<span class="st">&quot;CE|clonal|13NEXTgenC1&quot;</span>,studyName,<span class="dt">ignore.case =</span> T),<span class="st">&quot;CET&quot;</span>,<span class="ot">NA</span>),</span>
+<span id="cb11-6"><a href="prepTP.html#cb11-6"></a>           <span class="dt">TrialType=</span><span class="kw">ifelse</span>(<span class="kw">grepl</span>(<span class="st">&quot;EC&quot;</span>,studyName,<span class="dt">ignore.case =</span> T),<span class="st">&quot;ExpCET&quot;</span>,TrialType),</span>
+<span id="cb11-7"><a href="prepTP.html#cb11-7"></a>           <span class="dt">TrialType=</span><span class="kw">ifelse</span>(<span class="kw">grepl</span>(<span class="st">&quot;PYT&quot;</span>,studyName,<span class="dt">ignore.case =</span> T),<span class="st">&quot;PYT&quot;</span>,TrialType),</span>
+<span id="cb11-8"><a href="prepTP.html#cb11-8"></a>           <span class="dt">TrialType=</span><span class="kw">ifelse</span>(<span class="kw">grepl</span>(<span class="st">&quot;AYT&quot;</span>,studyName,<span class="dt">ignore.case =</span> T),<span class="st">&quot;AYT&quot;</span>,TrialType),</span>
+<span id="cb11-9"><a href="prepTP.html#cb11-9"></a>           <span class="dt">TrialType=</span><span class="kw">ifelse</span>(<span class="kw">grepl</span>(<span class="st">&quot;UYT&quot;</span>,studyName,<span class="dt">ignore.case =</span> T),<span class="st">&quot;UYT&quot;</span>,TrialType),</span>
+<span id="cb11-10"><a href="prepTP.html#cb11-10"></a>           <span class="dt">TrialType=</span><span class="kw">ifelse</span>(<span class="kw">grepl</span>(<span class="st">&quot;geneticgain|gg|genetic gain&quot;</span>,studyName,<span class="dt">ignore.case =</span> T),<span class="st">&quot;GeneticGain&quot;</span>,TrialType),</span>
+<span id="cb11-11"><a href="prepTP.html#cb11-11"></a>           <span class="dt">TrialType=</span><span class="kw">ifelse</span>(<span class="kw">grepl</span>(<span class="st">&quot;Cassava&quot;</span>,studyName,<span class="dt">ignore.case =</span> T) <span class="op">&amp;</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;/&quot;</span>,studyName),<span class="st">&quot;GeneticGain&quot;</span>,TrialType),</span>
+<span id="cb11-12"><a href="prepTP.html#cb11-12"></a>           <span class="dt">TrialType=</span><span class="kw">ifelse</span>((<span class="kw">grepl</span>(<span class="st">&quot;clonal evaluation trial&quot;</span>,<span class="op">!</span><span class="kw">grepl</span>(<span class="st">&quot;genetic gain&quot;</span>,studyDescription,<span class="dt">ignore.case =</span> T), </span>
+<span id="cb11-13"><a href="prepTP.html#cb11-13"></a>                                   <span class="dt">ignore.case =</span> T)),<span class="st">&quot;CET&quot;</span>,TrialType),</span>
+<span id="cb11-14"><a href="prepTP.html#cb11-14"></a>           <span class="dt">TrialType=</span><span class="kw">ifelse</span>(<span class="kw">grepl</span>(<span class="st">&quot;preliminary yield trial&quot;</span>,studyDescription,<span class="dt">ignore.case =</span> T),<span class="st">&quot;PYT&quot;</span>,TrialType),</span>
+<span id="cb11-15"><a href="prepTP.html#cb11-15"></a>           <span class="dt">TrialType=</span><span class="kw">ifelse</span>(<span class="kw">grepl</span>(<span class="st">&quot;Crossingblock|GS.C4.CB|cross&quot;</span>,studyName) <span class="op">&amp;</span><span class="st"> </span><span class="kw">is.na</span>(TrialType),<span class="st">&quot;CrossingBlock&quot;</span>,TrialType),</span>
+<span id="cb11-16"><a href="prepTP.html#cb11-16"></a>           <span class="dt">TrialType=</span><span class="kw">ifelse</span>(<span class="kw">grepl</span>(<span class="st">&quot;NCRP&quot;</span>,studyName) <span class="op">&amp;</span><span class="st"> </span><span class="kw">is.na</span>(TrialType),<span class="st">&quot;NCRP&quot;</span>,TrialType),</span>
+<span id="cb11-17"><a href="prepTP.html#cb11-17"></a>           <span class="dt">TrialType=</span><span class="kw">ifelse</span>(<span class="kw">grepl</span>(<span class="st">&quot;conservation&quot;</span>,studyName) <span class="op">&amp;</span><span class="st"> </span><span class="kw">is.na</span>(TrialType),<span class="st">&quot;Conservation&quot;</span>,TrialType))</span>
+<span id="cb11-18"><a href="prepTP.html#cb11-18"></a>  <span class="kw">return</span>(outdata) }</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="prepTP.html#cb12-1"></a>dbdata&lt;-<span class="kw">makeTrialTypeVar</span>(dbdata) </span>
+<span id="cb12-2"><a href="prepTP.html#cb12-2"></a>dbdata <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-3"><a href="prepTP.html#cb12-3"></a><span class="st">  </span><span class="kw">count</span>(TrialType)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 2
+##   TrialType         n
+##   &lt;chr&gt;         &lt;int&gt;
+## 1 AYT            2679
+## 2 CET            4126
+## 3 CrossingBlock   298
+## 4 GeneticGain     823
+## 5 PYT            2204
+## 6 UYT            1242</code></pre>
+</div>
+<div id="traits-and-traitabbreviations" class="section level3">
+<h3><span class="header-section-number">1.3.2</span> Traits and TraitAbbreviations</h3>
+<p>Function to rename columns and remove everything unecessary</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="prepTP.html#cb14-1"></a>renameAndSelectCols&lt;-<span class="cf">function</span>(traitabbrevs,indata,</span>
+<span id="cb14-2"><a href="prepTP.html#cb14-2"></a>                              customColsToKeep){</span>
+<span id="cb14-3"><a href="prepTP.html#cb14-3"></a>  <span class="co"># @indata: data.frame with 2 cols (TraitAbbrev and TraitName)</span></span>
+<span id="cb14-4"><a href="prepTP.html#cb14-4"></a>  <span class="co">### TraitName should match exactly to cassava ontology names</span></span>
+<span id="cb14-5"><a href="prepTP.html#cb14-5"></a>  <span class="co"># @customColsToKeep: char. vec. of any custom cols you added and want to keep</span></span>
+<span id="cb14-6"><a href="prepTP.html#cb14-6"></a>  outdata&lt;-indata <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb14-7"><a href="prepTP.html#cb14-7"></a><span class="st">    </span><span class="kw">select</span>(studyYear,programName,locationName,studyName,studyDesign,plotWidth,plotLength,fieldSize,</span>
+<span id="cb14-8"><a href="prepTP.html#cb14-8"></a>           plantingDate,harvestDate,locationName,germplasmName,</span>
+<span id="cb14-9"><a href="prepTP.html#cb14-9"></a>           replicate,blockNumber,plotNumber,rowNumber,colNumber,entryType,</span>
+<span id="cb14-10"><a href="prepTP.html#cb14-10"></a>           trialType<span class="op">:</span>numberReps,folderName,</span>
+<span id="cb14-11"><a href="prepTP.html#cb14-11"></a>           <span class="kw">all_of</span>(customColsToKeep), </span>
+<span id="cb14-12"><a href="prepTP.html#cb14-12"></a>           <span class="kw">all_of</span>(traitabbrevs<span class="op">$</span>TraitName)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb14-13"><a href="prepTP.html#cb14-13"></a><span class="st">    </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> traitabbrevs<span class="op">$</span>TraitName,</span>
+<span id="cb14-14"><a href="prepTP.html#cb14-14"></a>                 <span class="dt">names_to =</span> <span class="st">&quot;TraitName&quot;</span>,</span>
+<span id="cb14-15"><a href="prepTP.html#cb14-15"></a>                 <span class="dt">values_to =</span> <span class="st">&quot;Value&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb14-16"><a href="prepTP.html#cb14-16"></a><span class="st">    </span><span class="kw">left_join</span>(.,traitabbrevs) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb14-17"><a href="prepTP.html#cb14-17"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>TraitName) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb14-18"><a href="prepTP.html#cb14-18"></a><span class="st">    </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> TraitAbbrev,</span>
+<span id="cb14-19"><a href="prepTP.html#cb14-19"></a>                <span class="dt">values_from =</span> <span class="st">&quot;Value&quot;</span>)</span>
+<span id="cb14-20"><a href="prepTP.html#cb14-20"></a>  <span class="kw">return</span>(outdata) }</span></code></pre></div>
+<p>Searching through the traits in the download</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="prepTP.html#cb15-1"></a>dbdata <span class="op">%&gt;%</span><span class="st"> </span>colnames <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;cassava.mosaic.disease.severity.*.month&quot;</span>,.,<span class="dt">value =</span> T)</span>
+<span id="cb15-2"><a href="prepTP.html#cb15-2"></a>dbdata <span class="op">%&gt;%</span><span class="st"> </span>colnames <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;dry.matter&quot;</span>,.,<span class="dt">value =</span> T)</span>
+<span id="cb15-3"><a href="prepTP.html#cb15-3"></a>dbdata <span class="op">%&gt;%</span><span class="st"> </span>colnames <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;plant.height.measurement.in.cm&quot;</span>,.,<span class="dt">value =</span> T)</span>
+<span id="cb15-4"><a href="prepTP.html#cb15-4"></a>dbdata <span class="op">%&gt;%</span><span class="st"> </span>colnames <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;first.apical.branch.height.measurement.in.cm&quot;</span>,.,<span class="dt">value =</span> T)</span>
+<span id="cb15-5"><a href="prepTP.html#cb15-5"></a>dbdata <span class="op">%&gt;%</span><span class="st"> </span>colnames <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;fresh.shoot.weight.measurement.in.kg.per.plot&quot;</span>,.,<span class="dt">value =</span> T)</span>
+<span id="cb15-6"><a href="prepTP.html#cb15-6"></a>dbdata <span class="op">%&gt;%</span><span class="st"> </span>colnames <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;fresh.storage.root.weight.per.plot&quot;</span>,.,<span class="dt">value =</span> T)</span>
+<span id="cb15-7"><a href="prepTP.html#cb15-7"></a>dbdata <span class="op">%&gt;%</span><span class="st"> </span>colnames <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;root.number.counting&quot;</span>,.,<span class="dt">value =</span> T)</span>
+<span id="cb15-8"><a href="prepTP.html#cb15-8"></a>dbdata <span class="op">%&gt;%</span><span class="st"> </span>colnames <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;total.carotenoid.by.chart.1.8&quot;</span>,.,<span class="dt">value =</span> T)</span>
+<span id="cb15-9"><a href="prepTP.html#cb15-9"></a>dbdata <span class="op">%&gt;%</span><span class="st"> </span>colnames <span class="op">%&gt;%</span><span class="st"> </span>.[<span class="dv">240</span><span class="op">:</span><span class="kw">length</span>(.)]</span></code></pre></div>
+<p>Making a table of abbreviations for renaming</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="prepTP.html#cb16-1"></a>traitabbrevs&lt;-<span class="kw">tribble</span>(<span class="op">~</span>TraitAbbrev,<span class="op">~</span>TraitName,</span>
+<span id="cb16-2"><a href="prepTP.html#cb16-2"></a>        <span class="st">&quot;CMD1S&quot;</span>,<span class="st">&quot;cassava.mosaic.disease.severity.1.month.evaluation.CO_334.0000191&quot;</span>,</span>
+<span id="cb16-3"><a href="prepTP.html#cb16-3"></a>        <span class="st">&quot;CMD3S&quot;</span>,<span class="st">&quot;cassava.mosaic.disease.severity.3.month.evaluation.CO_334.0000192&quot;</span>,</span>
+<span id="cb16-4"><a href="prepTP.html#cb16-4"></a>        <span class="st">&quot;CMD6S&quot;</span>,<span class="st">&quot;cassava.mosaic.disease.severity.6.month.evaluation.CO_334.0000194&quot;</span>,</span>
+<span id="cb16-5"><a href="prepTP.html#cb16-5"></a>        <span class="st">&quot;CMD9S&quot;</span>,<span class="st">&quot;cassava.mosaic.disease.severity.9.month.evaluation.CO_334.0000193&quot;</span>,</span>
+<span id="cb16-6"><a href="prepTP.html#cb16-6"></a>        <span class="st">&quot;DM&quot;</span>,<span class="st">&quot;dry.matter.content.percentage.CO_334.0000092&quot;</span>,</span>
+<span id="cb16-7"><a href="prepTP.html#cb16-7"></a>        <span class="st">&quot;PLTHT&quot;</span>,<span class="st">&quot;plant.height.measurement.in.cm.CO_334.0000018&quot;</span>,</span>
+<span id="cb16-8"><a href="prepTP.html#cb16-8"></a>        <span class="st">&quot;BRNHT1&quot;</span>,<span class="st">&quot;first.apical.branch.height.measurement.in.cm.CO_334.0000106&quot;</span>,</span>
+<span id="cb16-9"><a href="prepTP.html#cb16-9"></a>        <span class="st">&quot;SHTWT&quot;</span>,<span class="st">&quot;fresh.shoot.weight.measurement.in.kg.per.plot.CO_334.0000016&quot;</span>,</span>
+<span id="cb16-10"><a href="prepTP.html#cb16-10"></a>        <span class="st">&quot;RTWT&quot;</span>,<span class="st">&quot;fresh.storage.root.weight.per.plot.CO_334.0000012&quot;</span>,</span>
+<span id="cb16-11"><a href="prepTP.html#cb16-11"></a>        <span class="st">&quot;RTNO&quot;</span>,<span class="st">&quot;root.number.counting.CO_334.0000011&quot;</span>,</span>
+<span id="cb16-12"><a href="prepTP.html#cb16-12"></a>        <span class="st">&quot;TCHART&quot;</span>,<span class="st">&quot;total.carotenoid.by.chart.1.8.CO_334.0000161&quot;</span>,</span>
+<span id="cb16-13"><a href="prepTP.html#cb16-13"></a>        <span class="st">&quot;NOHAV&quot;</span>,<span class="st">&quot;plant.stands.harvested.counting.CO_334.0000010&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="prepTP.html#cb17-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(traitabbrevs,<span class="dt">booktabs=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">TraitAbbrev</th>
+<th align="left">TraitName</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">CMD1S</td>
+<td align="left">cassava.mosaic.disease.severity.1.month.evaluation.CO_334.0000191</td>
+</tr>
+<tr class="even">
+<td align="left">CMD3S</td>
+<td align="left">cassava.mosaic.disease.severity.3.month.evaluation.CO_334.0000192</td>
+</tr>
+<tr class="odd">
+<td align="left">CMD6S</td>
+<td align="left">cassava.mosaic.disease.severity.6.month.evaluation.CO_334.0000194</td>
+</tr>
+<tr class="even">
+<td align="left">CMD9S</td>
+<td align="left">cassava.mosaic.disease.severity.9.month.evaluation.CO_334.0000193</td>
+</tr>
+<tr class="odd">
+<td align="left">DM</td>
+<td align="left">dry.matter.content.percentage.CO_334.0000092</td>
+</tr>
+<tr class="even">
+<td align="left">PLTHT</td>
+<td align="left">plant.height.measurement.in.cm.CO_334.0000018</td>
+</tr>
+<tr class="odd">
+<td align="left">BRNHT1</td>
+<td align="left">first.apical.branch.height.measurement.in.cm.CO_334.0000106</td>
+</tr>
+<tr class="even">
+<td align="left">SHTWT</td>
+<td align="left">fresh.shoot.weight.measurement.in.kg.per.plot.CO_334.0000016</td>
+</tr>
+<tr class="odd">
+<td align="left">RTWT</td>
+<td align="left">fresh.storage.root.weight.per.plot.CO_334.0000012</td>
+</tr>
+<tr class="even">
+<td align="left">RTNO</td>
+<td align="left">root.number.counting.CO_334.0000011</td>
+</tr>
+<tr class="odd">
+<td align="left">TCHART</td>
+<td align="left">total.carotenoid.by.chart.1.8.CO_334.0000161</td>
+</tr>
+<tr class="even">
+<td align="left">NOHAV</td>
+<td align="left">plant.stands.harvested.counting.CO_334.0000010</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="prepTP.html#cb18-1"></a>dbdata&lt;-<span class="kw">renameAndSelectCols</span>(traitabbrevs,<span class="dt">indata=</span>dbdata,<span class="dt">customColsToKeep =</span> <span class="st">&quot;TrialType&quot;</span>)</span></code></pre></div>
+<pre><code>## Joining, by = &quot;TraitName&quot;</code></pre>
+</div>
+<div id="qc-trait-values" class="section level3">
+<h3><span class="header-section-number">1.3.3</span> QC Trait values</h3>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="prepTP.html#cb20-1"></a>dbdata&lt;-dbdata <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb20-2"><a href="prepTP.html#cb20-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">CMD1S=</span><span class="kw">ifelse</span>(CMD1S<span class="op">&lt;</span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>CMD1S<span class="op">&gt;</span><span class="dv">5</span>,<span class="ot">NA</span>,CMD1S),</span>
+<span id="cb20-3"><a href="prepTP.html#cb20-3"></a>         <span class="dt">CMD3S=</span><span class="kw">ifelse</span>(CMD3S<span class="op">&lt;</span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>CMD3S<span class="op">&gt;</span><span class="dv">5</span>,<span class="ot">NA</span>,CMD3S),</span>
+<span id="cb20-4"><a href="prepTP.html#cb20-4"></a>         <span class="dt">CMD6S=</span><span class="kw">ifelse</span>(CMD6S<span class="op">&lt;</span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>CMD1S<span class="op">&gt;</span><span class="dv">5</span>,<span class="ot">NA</span>,CMD6S),</span>
+<span id="cb20-5"><a href="prepTP.html#cb20-5"></a>         <span class="dt">CMD9S=</span><span class="kw">ifelse</span>(CMD9S<span class="op">&lt;</span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>CMD1S<span class="op">&gt;</span><span class="dv">5</span>,<span class="ot">NA</span>,CMD9S),</span>
+<span id="cb20-6"><a href="prepTP.html#cb20-6"></a>         <span class="dt">DM=</span><span class="kw">ifelse</span>(DM<span class="op">&gt;</span><span class="dv">100</span> <span class="op">|</span><span class="st"> </span>DM<span class="op">&lt;=</span><span class="dv">0</span>,<span class="ot">NA</span>,DM),</span>
+<span id="cb20-7"><a href="prepTP.html#cb20-7"></a>         <span class="dt">RTWT=</span><span class="kw">ifelse</span>(RTWT<span class="op">==</span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>NOHAV<span class="op">==</span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span><span class="kw">is.na</span>(NOHAV),<span class="ot">NA</span>,RTWT),</span>
+<span id="cb20-8"><a href="prepTP.html#cb20-8"></a>         <span class="dt">SHTWT=</span><span class="kw">ifelse</span>(SHTWT<span class="op">==</span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>NOHAV<span class="op">==</span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span><span class="kw">is.na</span>(NOHAV),<span class="ot">NA</span>,SHTWT),</span>
+<span id="cb20-9"><a href="prepTP.html#cb20-9"></a>         <span class="dt">RTNO=</span><span class="kw">ifelse</span>(RTNO<span class="op">==</span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span>NOHAV<span class="op">==</span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span><span class="kw">is.na</span>(NOHAV),<span class="ot">NA</span>,RTNO),</span>
+<span id="cb20-10"><a href="prepTP.html#cb20-10"></a>         <span class="dt">NOHAV=</span><span class="kw">ifelse</span>(NOHAV<span class="op">==</span><span class="dv">0</span>,<span class="ot">NA</span>,NOHAV),</span>
+<span id="cb20-11"><a href="prepTP.html#cb20-11"></a>         <span class="dt">NOHAV=</span><span class="kw">ifelse</span>(NOHAV<span class="op">&gt;</span><span class="dv">42</span>,<span class="ot">NA</span>,NOHAV),</span>
+<span id="cb20-12"><a href="prepTP.html#cb20-12"></a>         <span class="dt">RTNO=</span><span class="kw">ifelse</span>(<span class="op">!</span>RTNO <span class="op">%in%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10000</span>,<span class="ot">NA</span>,RTNO),</span>
+<span id="cb20-13"><a href="prepTP.html#cb20-13"></a>         <span class="dt">TCHART=</span><span class="kw">ifelse</span>(TCHART <span class="op">%in%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">8</span>,TCHART,<span class="ot">NA</span>))</span></code></pre></div>
+</div>
+<div id="harvest-index" class="section level3">
+<h3><span class="header-section-number">1.3.4</span> Harvest Index</h3>
+<p>Compute harvest index <em>after</em> QC of RTWT and SHTWT above.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="prepTP.html#cb21-1"></a>dbdata&lt;-dbdata <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb21-2"><a href="prepTP.html#cb21-2"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">HI=</span>RTWT<span class="op">/</span>(RTWT<span class="op">+</span>SHTWT))</span></code></pre></div>
+</div>
+<div id="unit-area-traits" class="section level3">
+<h3><span class="header-section-number">1.3.5</span> Unit area traits</h3>
+<p>I anticipate this will not be necessary as it will be computed before or during data upload.</p>
+<p>For calculating fresh root yield:</p>
+<ol style="list-style-type: decimal">
+<li><strong>PlotSpacing:</strong> Area in <span class="math inline">\(m^2\)</span> per plant. plotWidth and plotLength metadata would hypothetically provide this info, but is missing for vast majority of trials. Therefore, use info from Fola.</li>
+<li><strong>maxNOHAV:</strong> Instead of ExpectedNOHAV. Need to know the max number of plants in the area harvested. For some trials, only the inner (or “net”) plot is harvested, therefore the PlantsPerPlot meta-variable will not suffice. Besides, the PlantsPerPlot information is missing for the vast majority of trials. Instead, use observed max(NOHAV) for each trial. We use this plus the PlotSpacing to calc. the area over which the RTWT was measured. During analysis, variation in the actual number of plants harvested will be accounted for.</li>
+</ol>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="prepTP.html#cb22-1"></a>dbdata&lt;-dbdata <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb22-2"><a href="prepTP.html#cb22-2"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">PlotSpacing=</span><span class="kw">ifelse</span>(programName<span class="op">!=</span><span class="st">&quot;IITA&quot;</span>,<span class="dv">1</span>,</span>
+<span id="cb22-3"><a href="prepTP.html#cb22-3"></a>                              <span class="kw">ifelse</span>(studyYear<span class="op">&lt;</span><span class="dv">2013</span>,<span class="dv">1</span>,</span>
+<span id="cb22-4"><a href="prepTP.html#cb22-4"></a>                              <span class="kw">ifelse</span>(TrialType <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;CET&quot;</span>,<span class="st">&quot;GeneticGain&quot;</span>,<span class="st">&quot;ExpCET&quot;</span>),<span class="dv">1</span>,<span class="fl">0.8</span>))))</span>
+<span id="cb22-5"><a href="prepTP.html#cb22-5"></a>maxNOHAV_byStudy&lt;-dbdata <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb22-6"><a href="prepTP.html#cb22-6"></a><span class="st">  </span><span class="kw">group_by</span>(programName,locationName,studyYear,studyName,studyDesign) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb22-7"><a href="prepTP.html#cb22-7"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">MaxNOHAV=</span><span class="kw">max</span>(NOHAV, <span class="dt">na.rm=</span>T)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb22-8"><a href="prepTP.html#cb22-8"></a><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb22-9"><a href="prepTP.html#cb22-9"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">MaxNOHAV=</span><span class="kw">ifelse</span>(MaxNOHAV<span class="op">==</span><span class="st">&quot;-Inf&quot;</span>,<span class="ot">NA</span>,MaxNOHAV))</span>
+<span id="cb22-10"><a href="prepTP.html#cb22-10"></a></span>
+<span id="cb22-11"><a href="prepTP.html#cb22-11"></a><span class="co"># I log transform yield traits </span></span>
+<span id="cb22-12"><a href="prepTP.html#cb22-12"></a><span class="co"># to satisfy homoskedastic residuals assumption </span></span>
+<span id="cb22-13"><a href="prepTP.html#cb22-13"></a><span class="co"># of linear mixed models</span></span>
+<span id="cb22-14"><a href="prepTP.html#cb22-14"></a>dbdata&lt;-<span class="kw">left_join</span>(dbdata,maxNOHAV_byStudy) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb22-15"><a href="prepTP.html#cb22-15"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">logFYLD=</span><span class="kw">log</span>(RTWT<span class="op">/</span>(MaxNOHAV<span class="op">*</span>PlotSpacing)<span class="op">*</span><span class="dv">10</span>),</span>
+<span id="cb22-16"><a href="prepTP.html#cb22-16"></a>         <span class="dt">logTOPYLD=</span><span class="kw">log</span>(SHTWT<span class="op">/</span>(MaxNOHAV<span class="op">*</span>PlotSpacing)<span class="op">*</span><span class="dv">10</span>),</span>
+<span id="cb22-17"><a href="prepTP.html#cb22-17"></a>         <span class="dt">PropNOHAV=</span>NOHAV<span class="op">/</span>MaxNOHAV) </span></code></pre></div>
+</div>
+<div id="season-wide-mean-cmds" class="section level3">
+<h3><span class="header-section-number">1.3.6</span> Season-wide mean CMDS</h3>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="prepTP.html#cb23-1"></a>dbdata&lt;-dbdata <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb23-2"><a href="prepTP.html#cb23-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">MCMDS=</span><span class="kw">rowMeans</span>(.[,<span class="kw">c</span>(<span class="st">&quot;CMD1S&quot;</span>,<span class="st">&quot;CMD3S&quot;</span>,<span class="st">&quot;CMD6S&quot;</span>,<span class="st">&quot;CMD9S&quot;</span>)], <span class="dt">na.rm =</span> T)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb23-3"><a href="prepTP.html#cb23-3"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>CMD1S,<span class="op">-</span>CMD3S,<span class="op">-</span>CMD6S,<span class="op">-</span>CMD9S,<span class="op">-</span>RTWT,<span class="op">-</span>SHTWT)</span></code></pre></div>
+</div>
+<div id="assign-genos-to-phenos" class="section level3">
+<h3><span class="header-section-number">1.3.7</span> Assign genos to phenos</h3>
+<p>Downstream genomic prediction will require user to have a column that matches plots genotype identity to a maximum of one row of a SNP dosage matrix (or row/col of a kinship matrix).</p>
+<p>This is made easy in the example dataset set-up <a href="index.html#example_data">previously</a>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="prepTP.html#cb24-1"></a>geno2pheno&lt;-<span class="kw">readRDS</span>(<span class="st">&quot;data/example_geno2pheno.rds&quot;</span>)</span>
+<span id="cb24-2"><a href="prepTP.html#cb24-2"></a>dbdata&lt;-<span class="kw">left_join</span>(dbdata,geno2pheno) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb24-3"><a href="prepTP.html#cb24-3"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">GID=</span>DNAname)</span></code></pre></div>
+<pre><code>## Joining, by = &quot;germplasmName&quot;</code></pre>
+</div>
+<div id="write-cleaned-dataset" class="section level3">
+<h3><span class="header-section-number">1.3.8</span> Write cleaned dataset</h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="prepTP.html#cb26-1"></a><span class="kw">saveRDS</span>(dbdata,<span class="dt">file=</span><span class="st">&quot;data/example_data_cleaned.rds&quot;</span>)</span></code></pre></div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="curateTrials.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["CassavaGS_SOPs.pdf", "CassavaGS_SOPs.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

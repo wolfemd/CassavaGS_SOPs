@@ -1,0 +1,3 @@
+"0","dbdata<-dbdata %>% "
+"0","  mutate(MCMDS=rowMeans(.[,c(""CMD1S"",""CMD3S"",""CMD6S"",""CMD9S"")], na.rm = T)) %>% "
+"0","  select(-CMD1S,-CMD3S,-CMD6S,-CMD9S,-RTWT,-SHTWT)"

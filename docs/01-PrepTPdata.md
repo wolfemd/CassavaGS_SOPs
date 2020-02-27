@@ -1,0 +1,355 @@
+# Prepare training data {#prepTP}
+
+The current GS pipeline starts with download of field (phenotype) data from [CassavaBase](http://www.cassavabase.org).
+
+## Cassavabase download
+
+1. Use the [Cassavabase search wizard](https://www.cassavabase.org/breeders/search)
+2. Select the trials of interest. 
+3. Downloaded the meta-data (CSV format).
+4. Downloaded the phenotype data (PLOT-basis only).
+
+There are many points for initial user curation, much can be handled with curation of data on the database, else it needs to be cleaned up after download. 
+
+## Formatting and initial QC
+
+For the sake of _standard_ code, users need to formate and QC their data either as it is represented on the DB (i.e. in the metadata) and/or in processing post-data-download. 
+
+### Checklist
+
+1. Recommend to rename trait columns (with the code CO_334) with an abbreviation.
+2. Recommend to remove unwanted traits. Saves RAM, etc.
+3. Experimental design variables
+  - **replicate:** Represents COMPLETE blocks only. I have found sometimes, blockNumber was used.
+  - **blockNumber:** INCOMPLETE blocks only.
+4. QC Trait values
+  - Much of this may be already done before upload to DB, or by DB prior to download. 
+  - Set missing Disease Severity values <1 or >5
+  - Set missing disease incidence <0 or >1
+  - Dry Matter Content (DM)
+    * Set missing DM==0
+    * Set missing DM >65 and/or <4 (alternative)
+    * Check which methods were used to measure this. For plots with multiple methods used, decide on a way to choose between them or average them. Create a consensus column for “DM”, which should have a minimum of missing values. Remove all other DM traits.
+    * If both "oven dry" and "specific gravity" applied, choose "oven dry" data. If only one or the other, take what you can get!
+  - Yield traits (RTWT, RTNO, SHTWT, FYLD, TOPYLD)
+    * Set missing when: Value==0 | NOHAV==0 | is.na(NOHAV)
+  - Remove non-integer values of RTNO
+  - Harvest Index (HI)
+    * Compute harvest index _after_ QC of RTWT and SHTWT above.
+5. PerArea Calculations (FYLD and TOPYLD)
+  - Compute _after_ QC of RTWT and SHTWT above.
+  - **netplot_area:** unclear which meta variable on DB should represent this
+      + **netplot_count:** Expected number of plant stands harvested or ExpectedNOHAV. I've been using MaxNOHAV as a proxy. 
+      + **m2_PerPlant:** aka **PlotSpacing**
+      + **netplot_area = netplot_count x m2_PerPlant**
+  - FYLD = 10*(RTWT/netplot_area)
+6. Composite traits, e.g. season-wide mean disease severity or AUDPC, etc.
+7. Assign genos to phenos
+  - The **germplasmName** variable is the critical variable indicating genotype (clone) identities and should be used for any downstream analysis. However, imputed SNP dosage data or kinship matrices that are needed for downstream genomic prediction may have different names. Cassavabase will soon supply those and will hopefully provide an easy solution. For now, I rely on flat files, which I created over the years. Downstream code will require a genotype ID column to be specified which matches between phenos/plots and genos/kinshipMatrices.
+  - Select one DNA sample per “germplasmName"
+    * Often there are more than one.
+    * It may actually be ok for one DNA sample to point to multiple germplasmName (not all clone names are successfully merged / synonymized) 
+    * But ideally we don’t want many DNA pointing to same data point, for downstream mixed modeling. 
+
+### Specifications for Output
+
+**OUTPUT:** a "cleaned", dataset with all traits, experimental design and other co-variables necessary for downstream analysis defined. 
+
+
+## Worked example
+
+### Read-in data
+
+
+```r
+library(tidyverse); library(magrittr)
+```
+
+```
+## ── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──
+```
+
+```
+## ✓ ggplot2 3.2.1     ✓ purrr   0.3.3
+## ✓ tibble  2.1.3     ✓ dplyr   0.8.4
+## ✓ tidyr   1.0.2     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.4.0
+```
+
+```
+## ── Conflicts ────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+```
+
+```
+## 
+## Attaching package: 'magrittr'
+```
+
+```
+## The following object is masked from 'package:purrr':
+## 
+##     set_names
+```
+
+```
+## The following object is masked from 'package:tidyr':
+## 
+##     extract
+```
+
+
+```r
+readDBdata<-function(phenotypeFile,metadataFile){
+      pheno<-read.csv(phenotypeFile,
+                      na.strings = c("#VALUE!",NA,".",""," ","-","\""),
+                      stringsAsFactors = F)
+      meta<-read.csv(metadataFile,
+                     na.strings = c("#VALUE!",NA,".",""," ","-","\""),
+                     stringsAsFactors = F) %>% 
+            rename(programName=breedingProgramName,
+                   programDescription=breedingProgramDescription,
+                   programDbId=breedingProgramDbId)
+      indata<-left_join(pheno,meta) %>% 
+            filter(observationLevel=="plot")
+      return(indata) }    
+```
+
+
+```r
+phenotypeFile<-"data/example_phenotype_download.csv"
+metadataFile<-"data/example_metadata_download.csv"
+
+dbdata<-readDBdata(phenotypeFile,metadataFile)
+```
+
+```
+## Joining, by = c("studyYear", "programDbId", "programName", "programDescription", "studyDbId", "studyName", "studyDescription", "studyDesign", "plotWidth", "plotLength", "fieldSize", "fieldTrialIsPlannedToBeGenotyped", "fieldTrialIsPlannedToCross", "plantingDate", "harvestDate", "locationDbId", "locationName")
+```
+
+TrialType Variable
+
+```r
+makeTrialTypeVar<-function(indata){
+  # This is peculiar to what works (for me) for IITA
+  # Can customize this or add lines to grab TrialTypes for each breeding program
+  outdata<-indata %>% 
+    mutate(TrialType=ifelse(grepl("CE|clonal|13NEXTgenC1",studyName,ignore.case = T),"CET",NA),
+           TrialType=ifelse(grepl("EC",studyName,ignore.case = T),"ExpCET",TrialType),
+           TrialType=ifelse(grepl("PYT",studyName,ignore.case = T),"PYT",TrialType),
+           TrialType=ifelse(grepl("AYT",studyName,ignore.case = T),"AYT",TrialType),
+           TrialType=ifelse(grepl("UYT",studyName,ignore.case = T),"UYT",TrialType),
+           TrialType=ifelse(grepl("geneticgain|gg|genetic gain",studyName,ignore.case = T),"GeneticGain",TrialType),
+           TrialType=ifelse(grepl("Cassava",studyName,ignore.case = T) & grepl("/",studyName),"GeneticGain",TrialType),
+           TrialType=ifelse((grepl("clonal evaluation trial",!grepl("genetic gain",studyDescription,ignore.case = T), 
+                                   ignore.case = T)),"CET",TrialType),
+           TrialType=ifelse(grepl("preliminary yield trial",studyDescription,ignore.case = T),"PYT",TrialType),
+           TrialType=ifelse(grepl("Crossingblock|GS.C4.CB|cross",studyName) & is.na(TrialType),"CrossingBlock",TrialType),
+           TrialType=ifelse(grepl("NCRP",studyName) & is.na(TrialType),"NCRP",TrialType),
+           TrialType=ifelse(grepl("conservation",studyName) & is.na(TrialType),"Conservation",TrialType))
+  return(outdata) }
+```
+
+
+```r
+dbdata<-makeTrialTypeVar(dbdata) 
+dbdata %>% 
+  count(TrialType)
+```
+
+```
+## # A tibble: 6 x 2
+##   TrialType         n
+##   <chr>         <int>
+## 1 AYT            2679
+## 2 CET            4126
+## 3 CrossingBlock   298
+## 4 GeneticGain     823
+## 5 PYT            2204
+## 6 UYT            1242
+```
+
+### Traits and TraitAbbreviations
+
+Function to rename columns and remove everything unecessary
+
+```r
+renameAndSelectCols<-function(traitabbrevs,indata,
+                              customColsToKeep){
+  # @indata: data.frame with 2 cols (TraitAbbrev and TraitName)
+  ### TraitName should match exactly to cassava ontology names
+  # @customColsToKeep: char. vec. of any custom cols you added and want to keep
+  outdata<-indata %>% 
+    select(studyYear,programName,locationName,studyName,studyDesign,plotWidth,plotLength,fieldSize,
+           plantingDate,harvestDate,locationName,germplasmName,
+           replicate,blockNumber,plotNumber,rowNumber,colNumber,entryType,
+           trialType:numberReps,folderName,
+           all_of(customColsToKeep), 
+           all_of(traitabbrevs$TraitName)) %>% 
+    pivot_longer(cols = traitabbrevs$TraitName,
+                 names_to = "TraitName",
+                 values_to = "Value") %>% 
+    left_join(.,traitabbrevs) %>% 
+    select(-TraitName) %>% 
+    pivot_wider(names_from = TraitAbbrev,
+                values_from = "Value")
+  return(outdata) }
+```
+
+Searching through the traits in the download
+
+```r
+dbdata %>% colnames %>% grep("cassava.mosaic.disease.severity.*.month",.,value = T)
+dbdata %>% colnames %>% grep("dry.matter",.,value = T)
+dbdata %>% colnames %>% grep("plant.height.measurement.in.cm",.,value = T)
+dbdata %>% colnames %>% grep("first.apical.branch.height.measurement.in.cm",.,value = T)
+dbdata %>% colnames %>% grep("fresh.shoot.weight.measurement.in.kg.per.plot",.,value = T)
+dbdata %>% colnames %>% grep("fresh.storage.root.weight.per.plot",.,value = T)
+dbdata %>% colnames %>% grep("root.number.counting",.,value = T)
+dbdata %>% colnames %>% grep("total.carotenoid.by.chart.1.8",.,value = T)
+dbdata %>% colnames %>% .[240:length(.)]
+```
+Making a table of abbreviations for renaming
+
+```r
+traitabbrevs<-tribble(~TraitAbbrev,~TraitName,
+        "CMD1S","cassava.mosaic.disease.severity.1.month.evaluation.CO_334.0000191",
+        "CMD3S","cassava.mosaic.disease.severity.3.month.evaluation.CO_334.0000192",
+        "CMD6S","cassava.mosaic.disease.severity.6.month.evaluation.CO_334.0000194",
+        "CMD9S","cassava.mosaic.disease.severity.9.month.evaluation.CO_334.0000193",
+        "DM","dry.matter.content.percentage.CO_334.0000092",
+        "PLTHT","plant.height.measurement.in.cm.CO_334.0000018",
+        "BRNHT1","first.apical.branch.height.measurement.in.cm.CO_334.0000106",
+        "SHTWT","fresh.shoot.weight.measurement.in.kg.per.plot.CO_334.0000016",
+        "RTWT","fresh.storage.root.weight.per.plot.CO_334.0000012",
+        "RTNO","root.number.counting.CO_334.0000011",
+        "TCHART","total.carotenoid.by.chart.1.8.CO_334.0000161",
+        "NOHAV","plant.stands.harvested.counting.CO_334.0000010")
+```
+
+
+```r
+knitr::kable(traitabbrevs,booktabs=TRUE)
+```
+
+
+
+TraitAbbrev   TraitName                                                         
+------------  ------------------------------------------------------------------
+CMD1S         cassava.mosaic.disease.severity.1.month.evaluation.CO_334.0000191 
+CMD3S         cassava.mosaic.disease.severity.3.month.evaluation.CO_334.0000192 
+CMD6S         cassava.mosaic.disease.severity.6.month.evaluation.CO_334.0000194 
+CMD9S         cassava.mosaic.disease.severity.9.month.evaluation.CO_334.0000193 
+DM            dry.matter.content.percentage.CO_334.0000092                      
+PLTHT         plant.height.measurement.in.cm.CO_334.0000018                     
+BRNHT1        first.apical.branch.height.measurement.in.cm.CO_334.0000106       
+SHTWT         fresh.shoot.weight.measurement.in.kg.per.plot.CO_334.0000016      
+RTWT          fresh.storage.root.weight.per.plot.CO_334.0000012                 
+RTNO          root.number.counting.CO_334.0000011                               
+TCHART        total.carotenoid.by.chart.1.8.CO_334.0000161                      
+NOHAV         plant.stands.harvested.counting.CO_334.0000010                    
+
+
+```r
+dbdata<-renameAndSelectCols(traitabbrevs,indata=dbdata,customColsToKeep = "TrialType")
+```
+
+```
+## Joining, by = "TraitName"
+```
+
+### QC Trait values
+
+
+```r
+dbdata<-dbdata %>% 
+  mutate(CMD1S=ifelse(CMD1S<1 | CMD1S>5,NA,CMD1S),
+         CMD3S=ifelse(CMD3S<1 | CMD3S>5,NA,CMD3S),
+         CMD6S=ifelse(CMD6S<1 | CMD1S>5,NA,CMD6S),
+         CMD9S=ifelse(CMD9S<1 | CMD1S>5,NA,CMD9S),
+         DM=ifelse(DM>100 | DM<=0,NA,DM),
+         RTWT=ifelse(RTWT==0 | NOHAV==0 | is.na(NOHAV),NA,RTWT),
+         SHTWT=ifelse(SHTWT==0 | NOHAV==0 | is.na(NOHAV),NA,SHTWT),
+         RTNO=ifelse(RTNO==0 | NOHAV==0 | is.na(NOHAV),NA,RTNO),
+         NOHAV=ifelse(NOHAV==0,NA,NOHAV),
+         NOHAV=ifelse(NOHAV>42,NA,NOHAV),
+         RTNO=ifelse(!RTNO %in% 1:10000,NA,RTNO),
+         TCHART=ifelse(TCHART %in% 1:8,TCHART,NA))
+```
+
+### Harvest Index
+
+Compute harvest index _after_ QC of RTWT and SHTWT above. 
+
+
+```r
+dbdata<-dbdata %>% 
+    mutate(HI=RTWT/(RTWT+SHTWT))
+```
+
+### Unit area traits
+
+I anticipate this will not be necessary as it will be computed before or during data upload.
+
+For calculating fresh root yield: 
+
+1. **PlotSpacing:** Area in $m^2$ per plant. plotWidth and plotLength metadata would hypothetically provide this info, but is missing for vast majority of trials. Therefore, use info from Fola.
+2. **maxNOHAV:** Instead of ExpectedNOHAV. Need to know the max number of plants in the area harvested. For some trials, only the inner (or "net") plot is harvested, therefore the PlantsPerPlot meta-variable will not suffice. Besides, the PlantsPerPlot information is missing for the vast majority of trials. Instead, use observed max(NOHAV) for each trial. We use this plus the PlotSpacing to calc. the area over which the RTWT was measured. During analysis, variation in the actual number of plants harvested will be accounted for.
+
+
+
+```r
+dbdata<-dbdata %>% 
+    mutate(PlotSpacing=ifelse(programName!="IITA",1,
+                              ifelse(studyYear<2013,1,
+                              ifelse(TrialType %in% c("CET","GeneticGain","ExpCET"),1,0.8))))
+maxNOHAV_byStudy<-dbdata %>% 
+  group_by(programName,locationName,studyYear,studyName,studyDesign) %>% 
+  summarize(MaxNOHAV=max(NOHAV, na.rm=T)) %>% 
+  ungroup() %>% 
+  mutate(MaxNOHAV=ifelse(MaxNOHAV=="-Inf",NA,MaxNOHAV))
+
+# I log transform yield traits 
+# to satisfy homoskedastic residuals assumption 
+# of linear mixed models
+dbdata<-left_join(dbdata,maxNOHAV_byStudy) %>% 
+  mutate(logFYLD=log(RTWT/(MaxNOHAV*PlotSpacing)*10),
+         logTOPYLD=log(SHTWT/(MaxNOHAV*PlotSpacing)*10),
+         PropNOHAV=NOHAV/MaxNOHAV) 
+```
+
+### Season-wide mean CMDS
+
+```r
+dbdata<-dbdata %>% 
+  mutate(MCMDS=rowMeans(.[,c("CMD1S","CMD3S","CMD6S","CMD9S")], na.rm = T)) %>% 
+  select(-CMD1S,-CMD3S,-CMD6S,-CMD9S,-RTWT,-SHTWT)
+```
+
+### Assign genos to phenos
+
+Downstream genomic prediction will require user to have a column that matches plots genotype identity to a maximum of one row of a SNP dosage matrix (or row/col of a kinship matrix).
+
+This is made easy in the example dataset set-up [previously](#example_data).
+
+
+```r
+geno2pheno<-readRDS("data/example_geno2pheno.rds")
+dbdata<-left_join(dbdata,geno2pheno) %>% 
+  rename(GID=DNAname)
+```
+
+```
+## Joining, by = "germplasmName"
+```
+
+### Write cleaned dataset
+
+
+```r
+saveRDS(dbdata,file="data/example_data_cleaned.rds")
+```
+
+
+

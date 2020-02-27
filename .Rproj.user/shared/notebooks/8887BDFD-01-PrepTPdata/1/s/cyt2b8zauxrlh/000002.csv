@@ -1,0 +1,3 @@
+"0","dbdata<-makeTrialTypeVar(dbdata) "
+"0","dbdata %>% "
+"0","  count(TrialType)"

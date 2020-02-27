@@ -1,0 +1,274 @@
+---
+title: 'Task 1: Error and Genotypic variance estimate'
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+---
+
+# Author: Moshood A. Bakare 
+# Position: PhD Candidate
+# Lab: Jean-Luc Jannink
+
+## Preliminaries
+Remove existing objects from memory, set the path for output and working directories.  
+**NOTE** You willl need to set these paths to be correct for you.
+```{r Setup}
+rm(list=ls())
+
+# Change this path so that it is correct for your directories
+basePath <- "~/Google Drive/TeachingMaterial/BreedingSchemeOptimization_Abuja2020/"
+output_dirpath <- paste0(basePath, "Optimization_output/")  
+working_dirpath <- paste0(basePath, "Raw_data_and_script_for_optimization/")
+setwd(working_dirpath)
+```
+I think this doesn't work if the sub-directories "outpath" and "working" already exist. Had to manually create both directories above. I suggest setting working directory to the `basePath` and using relative paths for output / input files.
+
+```{r Setup}
+## load the packages into memory for use
+ip <- installed.packages()
+packages_used <- c("plyr", "tidyverse", "dplyr","tidyr","lme4","workflowr")
+
+for (package in packages_used){
+  isInstalled <- package %in% rownames(ip)
+  if (!isInstalled){
+    stop(paste("ERROR: you need to install the", package, "package"))
+  } else{
+    library(package, character.only=T)
+  }
+}#END packages_used
+```
+I like this part. 
+
+```{r Setup}
+# "README.md" file documents packages and versions used for future reference
+# Function to write lines to the README.md file.  
+# Lines have to end with two spaces to cause a carriage return.
+addToREADME <- function(strVec, append=T){
+  # Add text with two spaces to get carriage return
+  write_lines(strVec, paste0(output_dirpath, "README.md"), sep="  \n", append=append)
+}
+
+addToREADME(paste0("## ", rmarkdown::metadata$title), append=F) 
+addToREADME(c(date(), ""))
+```
+should `rmarkdown::metadata$title`  have generated other than a NULL result?
+
+```{r Setup}
+packages_used <- as_tibble(ip[packages_used, c("Package", "Version", "Built")])
+# Clunky way to add the packages at the end
+readme_file <- paste0(output_dirpath, ".addToReadMe.txt")
+write_tsv(packages_used, readme_file)
+addToREADME(c("The packages used in this script are:", readLines(readme_file), ""))
+```
+
+
+```{r Setup}
+## List the files from the working directory with pattern "GS" and combine
+file_list <- list.files(pattern="GS")
+addToREADME(c(file_list, ""))
+## read each file named with specified pattern and combine
+all_combine <- ldply(file_list, read.csv, header = TRUE,skip=3, na.strings=c("","."))
+```
+These files weren't supplied, I usually download a chunk of trials as a single CSV. In the multi-trial downloads I use, you could `grep` for *studyName*s with "GS" in the name.
+
+
+```{r Setup}
+# rename default variable names from downloaded trials
+names(all_combine)[names(all_combine)=="plotNumber"] <- "plot_number"
+names(all_combine)[names(all_combine)=="studyYear"] <- "year"
+names(all_combine)[names(all_combine)=="studyName"] <- "trial"
+names(all_combine)[names(all_combine)=="locationName"] <- "loc"
+names(all_combine)[names(all_combine)=="germplasmName"] <- "clone"
+names(all_combine)[names(all_combine)=="replicate"] <- "rep"
+names(all_combine)[names(all_combine)=="dry.matter.content.percentage.CO_334.0000092"] <- "dm"
+names(all_combine)[names(all_combine)=="fresh.storage.root.weight.per.plot.CO_334.0000012"] <- "rtwt"
+names(all_combine)[names(all_combine)=="fresh.shoot.weight.measurement.in.kg.per.plot.CO_334.0000016"] <- "shtwt"
+names(all_combine)[names(all_combine)=="plant.stands.harvested.counting.CO_334.0000010"] <- "nohav"
+```
+You might like the function `dplyr::rename()` for this.
+
+```{r Setup}
+## retrieve key columns of interest from combined data and write a new file
+phenodat <- all_combine %>%
+  dplyr::select(c(plot_number, studyName, trial_type, cycle, location, year, accession_name, rep, control, nohav, rtwt, shtwt, dm, net_plot_count, netplot_area))
+```
+Where are you getting net_plot_count and netplot_area? Current meta-data columns coming from DB are: 
+plotWidth	plotLength	plantsPerPlot	numberBlocks	numberReps	fieldSize
+
+I'm still using MaxNOHAV as a proxy for plot size.
+
+Each breeding program will have a slightly different way of distinguishing "cycles", I create my own column to represent this information.
+
+```{r Setup}
+## combine all trials for selected traits including derived variables ##
+nextgendat <- phenodat %>%
+  mutate(new = ifelse(control==1,0,1),
+         fyld = (10/netplot_area)*rtwt,
+         check = ifelse(control == 0,'999', as.character(clone)),
+         dyld = fyld * (dm/100),
+         hi=rtwt/(rtwt+shtwt),
+         tyld = (10/netplot_area)*shtwt,
+         prop_hav = nohav/net_plot_count,
+         env = paste(loc,sep="",substr(year,3,4))) %>%
+  dplyr::select(plot_number,trial_type, trial, cycle, loc, year, env, clone, rep, control, check, new, nohav, prop_hav, rtwt, fyld, shtwt, tyld, dyld, hi, dm, everything())
+ 
+
+## Reshape raw data from wide to narrow format for model fitting  (tyld, dyld, hi,) dm ##
+raw_pheno <- nextgendat %>%
+  dplyr::select(trial_type, loc, year, env, cycle, trial, rep, control, check, new, clone, prop_hav, fyld, tyld,dyld,dm) %>%
+  gather(key = trait, value = y, -c(trial_type, loc, year, env, cycle, trial, rep, clone, check, new, control, prop_hav))
+
+
+# write combined trials in wide format to csv file in working directory
+write.csv(nextgendat,file=paste(output_dirpath,sep = "","combined_trials.csv"),row.names = F, na="") 
+
+
+# write extracted raw data for analysis from combined data to .csv format
+# write reshaped raw data to csv file format
+write.csv(raw_pheno,file=paste(output_dirpath,sep = "","raw_pheno.csv"),row.names = F, na="")
+```
+
+# Define user functions
+I haven't yet tried these functions with real data yet.
+Big thumbs up! I'm going to try to model after this myself.
+
+It's hard to assume experimental designs based on trial_type (cassavabase == trialType). 
+I have some code I use to check the design of each trial and determine which column might have complete vs. incomplete blocks.
+However, if we _could_ assume data were curated and standardized going into our function, then we could use the `studyDesign` variable from the DB.
+```{r Function definitions}
+# Function to extract variance components from fitted models
+getVarComp <- function(model){
+  as.data.frame(VarCorr(model))[,c("grp","vcov")] %>%
+    rename(effect=grp, VarEstimate=vcov) %>%
+    spread(key = effect, value = VarEstimate, fill=NA)
+}
+
+
+# Function to extract final output as data frame object
+getVarOutput <- function(modfit){
+  var_label <- attr(modfit,"split_labels")
+  if (any(is.na(modfit))){
+    varcomp <- data.frame(NA, NA)
+  } else{
+    varcomp <- data.frame(matrix(unlist(modfit), nrow=length(modfit), byrow=T))
+  }
+  colnames(varcomp) <- c("gen_var", "res_var")
+  varcomp <- round(varcomp[,c("gen_var","res_var")], 3)
+  var.out <- cbind(var_label, varcomp)
+  return(var.out)
+}
+
+
+# Function to fit the model to a trial, remove observations that are outliers,
+# and refit the model
+analyzeTrial <- function(x){
+  if (all(is.na(x$y))) return(rep(NA,2))
+  
+  if (any((x$trial_type=="CET") & (x$trait=="dm"))){
+    modfit <- lmer(y ~ check + rep + (1|clone:new), data=x)
+    mod.refit <- lmer(y ~ check + rep + (1|clone:new), data=x, 
+                      subset=abs(resid(modfit)/sigma(modfit)) <= 3.0)
+    } else if (any((x$trial_type=="CET") & (x$trait !="dm"))){
+      modfit <- lmer(y ~ check + rep + (1|clone:new) + prop_hav, data=x)
+      mod.refit <- lmer(y ~ check + rep + (1|clone:new) + prop_hav, data=x, 
+                        subset=abs(resid(modfit)/sigma(modfit)) <= 3.0)
+     } else if(any((x$trial_type !="CET") & (x$trait=="dm"))){
+       modfit <- lmer(y ~ rep + (1|clone), data=x)
+       mod.refit <- lmer(y ~ rep + (1|clone), data=x, subset=abs(resid(modfit)/sigma(modfit)) <= 3.0)
+     } else if (any((x$trial_type !="CET") & (x$trait!="dm"))){
+       modfit <- lmer(y ~ rep + (1|clone) + prop_hav, data=x)
+       mod.refit <- lmer(y ~ rep + (1|clone) + prop_hav, data=x, subset=abs(resid(modfit)/sigma(modfit)) <= 3.0)
+  }
+  varest <- getVarComp(mod.refit)
+}
+
+```
+
+# fit the model for CET established as augmented design
+
+```{r CET trials}
+
+#  Subset the CET trial and dm from raw_pheno data for model fitting
+CET.raw.dm <- raw_pheno %>%
+  select(trial_type, env, trial, rep, clone, check, new, trait, y) %>%
+  filter(trial_type=="CET" & trait=="dm")
+
+# coerce check and rep as  factors and droplevels for the genotype effect
+CET.raw.dm$check <- as.factor(CET.raw.dm$check)
+CET.raw.dm$rep <- as.factor(CET.raw.dm$rep)
+CET.raw.dm$clone <- droplevels(CET.raw.dm$clone)   
+
+# model the dry matter content in each of CET trial
+cet.raw.dm.model <- dlply(CET.raw.dm, .var=c("trial_type", "env", "trial", "trait"), .fun = analyzeTrial)
+
+cet.raw.dm.varout <- getVarOutput(cet.raw.dm.model)
+
+#  Subset the CET trial without dm trait from raw_pheno data for model fitting
+
+CET.raw.trait <- raw_pheno %>%
+  select(trial_type, env, trial, rep, clone, check, new, prop_hav, trait, y) %>%
+  filter(trial_type=="CET" & trait!="dm")
+
+# coerce rep as a factor and droplevels for the genotype effect
+CET.raw.trait$check<- as.factor(CET.raw.trait$check)
+CET.raw.trait$rep<- as.factor(CET.raw.trait$rep)
+CET.raw.trait$clone <- droplevels(CET.raw.trait$clone)   
+
+cet.raw.trait.model <- dlply(CET.raw.trait, .var=c("trial_type", "env", "trial", "trait"), .fun = analyzeTrial)
+
+cet.raw.trait.varout <- getVarOutput(cet.raw.trait.model)
+```
+
+# fit the model for other trial stage - PYT, AYT, and UYT established as RCBD
+
+```{r Non-CET trials}
+
+#  Subset non CET trial and dm from raw_pheno data for model fitting
+trial.raw.dm <- raw_pheno %>%
+  select(trial_type, env, trial, rep, clone, trait, y) %>%
+  filter(trial_type !="CET" & trait=="dm")
+
+# coerce rep as a factor and droplevels for the genotype effect
+trial.raw.dm$rep<- as.factor(trial.raw.dm$rep)
+trial.raw.dm$clone <- droplevels(trial.raw.dm$clone)
+
+trial.dm.model <- dlply(trial.raw.dm, .var=c("trial_type", "env", "trial", "trait"), .fun =analyzeTrial)
+
+trial.raw.dm.varout <- getVarOutput(trial.dm.model)
+
+#  Subset the non CET trial without dm trait from raw_pheno data for model fitting
+
+trial.raw.trait <- raw_pheno %>%
+  select(trial_type, env, trial, rep, clone, prop_hav, trait, y) %>%
+  filter(trial_type!="CET" & trait !="dm")
+
+
+# coerce rep as a factor and droplevels for the genotype effect
+trial.raw.trait$rep<- as.factor(trial.raw.trait$rep)
+trial.raw.trait$clone <- droplevels(trial.raw.trait$clone)
+
+trial.raw.trait.model <- dlply(trial.raw.trait, .var=c("trial_type", "env", "trial", "trait"), .fun=analyzeTrial)
+
+trial.raw.trait.varout <- getVarOutput(trial.raw.trait.model)
+
+```
+
+# Combine all output together as one
+
+```{r Combine output}
+# combine all the ouput together
+summ.out <- rbind(cet.raw.dm.varout, cet.raw.trait.varout, trial.raw.dm.varout, trial.raw.trait.varout)
+
+summ.out$trial_type <- factor(summ.out$trial_type, 
+                             levels=c("CET","PYT",  "AYT",  "UYT"))
+
+# calculate the total phenotypic variance and heritability
+summ.out <- summ.out %>%
+  mutate(pheno_var = gen_var + res_var, H2 = gen_var/pheno_var) %>%
+  arrange(trial_type, env, trial, trait)
+
+# save or write the output to an output directory path.
+write.csv(summ.out,file=paste(output_dirpath,sep = "","summary_output.csv"),row.names = F)
+
+```

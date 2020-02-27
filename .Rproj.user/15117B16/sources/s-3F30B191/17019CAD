@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1582055084450.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1200915058",
+    "id" : "17019CAD",
+    "lastKnownWriteTime" : 1582820495,
+    "last_content_update" : 1582820495233,
+    "path" : "~/Google Drive/CassavaGS_SOPs/01-PrepTPdata.Rmd",
+    "project_path" : "01-PrepTPdata.Rmd",
+    "properties" : {
+        "cursorPosition" : "231,2",
+        "scrollLine" : "210"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1582822387736.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1396627799",
+    "id" : "5ED744B8",
+    "lastKnownWriteTime" : 1582824794,
+    "last_content_update" : 1582824794217,
+    "path" : "~/Google Drive/CassavaGS_SOPs/03-GetBLUPs.Rmd",
+    "project_path" : "03-GetBLUPs.Rmd",
+    "properties" : {
+        "cursorPosition" : "22,0",
+        "scrollLine" : "4",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

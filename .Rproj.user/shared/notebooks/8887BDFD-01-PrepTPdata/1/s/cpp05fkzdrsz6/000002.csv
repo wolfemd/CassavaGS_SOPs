@@ -1,0 +1,5 @@
+"0","dbdata<-left_join(dbdata,geno2pheno) %>% 
+  rename(GID=DNAname)
+"
+"2","Joining, by = ""germplasmName""
+"
